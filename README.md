@@ -128,8 +128,61 @@ let y = 2;
 // ReferenceError: y is not defined
 ```
 
-
-
 > ## Event Bublling & Captureing
 
+
 > ## Event 위임 패턴
+이벤트위임은 다수의 자식 요소에 각각 이벤트 핸들러를 바인딩 하는 대신 하나의 부모요소에 이벤트 핸들러를 바인딩하는 방법이다.
+
+**HTML**
+```html
+<ul>
+    <li id="list-1">event #1</li>
+    <li id="list-2">event #2</li>
+    <li id="list-3">event #3</li>
+    <li id="list-4">event #4</li>
+    <li id="list-5">event #5</li>
+    <li id="list-6">event #6</li>
+</ul>
+```
+
+**JAVASCRIPT**
+```javascript
+eventPrint = (e) => {
+    console.log(e.target.id)
+}
+document.querySelector('#list-1').addEventListener('click', eventPrint)
+document.querySelector('#list-2').addEventListener('click', eventPrint)
+document.querySelector('#list-3').addEventListener('click', eventPrint)
+document.querySelector('#list-4').addEventListener('click', eventPrint)
+document.querySelector('#list-5').addEventListener('click', eventPrint)
+document.querySelector('#list-6').addEventListener('click', eventPrint)
+```
+위의 예제처럼 모든 li 요소가 클릭 이벤트에 반응하는 처리를 구현하고 싶은경우 li 요소에 이벤트핸들러를 바인딩하여 총 6개의 이벤트 핸들러를 바인딩 해 주어야 한다.
+
+만약 이 목록이 100개라면 100개의 바인딩을 해줘야 하는것이다.
+
+이것은 실행속도 저하의 원인이 되고, 코드 또한 매우 길어지며 작성도 불편하고 가독성도 떨어지게 된다.
+
+**HTML**
+```html
+<ul id="parent-list">
+    <li id="list-1">event #1</li>
+    <li id="list-2">event #2</li>
+    <li id="list-3">event #3</li>
+    <li id="list-4">event #4</li>
+    <li id="list-5">event #5</li>
+    <li id="list-6">event #6</li>
+</ul>
+
+<script>
+    document.querySelector('#parent-list').addEventListener('click', 
+      function(e) {
+          console.log(e.target.id + " 가 클릭 되었습니다.");
+      })
+</script>
+```
+
+위의 예제에서는 부모요소에 바인딩을 해주었기때문에 더이상의 추가 스크립트 작성은 불필요하고 li 요소가 추가되어도 별다른 추가 코드는 작성하지않아도 잘 작동하게 된다. 
+
+이것은 이벤트 흐름에 의해 영향을 미치기 때문에 가능한 것이다.
