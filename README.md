@@ -186,3 +186,26 @@ document.querySelector('#list-6').addEventListener('click', eventPrint)
 위의 예제에서는 부모요소에 바인딩을 해주었기때문에 더이상의 추가 스크립트 작성은 불필요하고 li 요소가 추가되어도 별다른 추가 코드는 작성하지않아도 잘 작동하게 된다. 
 
 이것은 이벤트 흐름에 의해 영향을 미치기 때문에 가능한 것이다.
+
+
+> ## '==' 연산자와 '===' 연산자의 차이는 무엇인가요?
+'==' 는 Equality 연산자 라고하며 JavaScript에서는 연산이 진행되기전에 피연산자들을 비교할수있도록 형변환을 자동으로 진행한 다음에 연산을 진행한다. 따라서 좀더 유연성을가진 비교연산자라고 볼수 있다.
+```javascript
+    1. console.log(255 == '255') // true
+    2. console.log(true == 1) // true
+    3. console.log(undefined == null) // true
+    4. console.log('abc' == new String('abc')) // true
+    5. console.log(null == false) // false
+    6. console.log('true' == true) //false
+    7. console.log(false == 0) // true
+```
+
+'===' 는 Identity 연산자로 형번환을 하지않고 피연산자가 가진 형태를 그대로 갖고 비교를 진행하게된다. 최근 자바스크립트에서는 '===' 사용을 권장하고 있다. 실제로도 === 으로 비교연산을 진행해야 알수없는 오류를 줄이고 디버깅이나 유지보수할때에도 알수없는 오류를 찾느라 고생할 시간을 줄일 수 있다.
+
+```javascript
+    console.log(255 === '255') // false
+    console.log(true === 1) // false
+    console.log(undefined === null) // false
+    console.log('abc' === new String('abc')) // false
+    console.log(false === 0) // true
+```
