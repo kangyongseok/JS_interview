@@ -207,5 +207,41 @@ document.querySelector('#list-6').addEventListener('click', eventPrint)
     console.log(true === 1) // false
     console.log(undefined === null) // false
     console.log('abc' === new String('abc')) // false
-    console.log(false === 0) // true
+    console.log(false === 0) // false
 ```
+
+위의예제에서 true 문으로 나왔던것들이 다 false 형태로 결과가 나오는것을 확인 할 수 있다.
+
+> ## apply()와 call()의 차이는 무엇인가요?
+
+> ## 알고 있는 디자인 패턴에 대해서 설명하세요 (ex. MVC, MVP, MVVM, FLEX)
+
+> ## 콜백함수는 무엇인가요?
+콜백함수란 어떤 이벤트가 발생한 후 수행될 함수를 의미한다. JavaScript 에서 함수는 1급 객체 이므로 인자로 함수를 전달 할 수 있다. 
+
+일급객체란
+* 변수나 데이터 구조안에 담을 수 있다.
+* 파라미터로 전달할 수 있다.
+* 반환 값으로 사용할 수 있다.
+* 할당에 사용된 이름과 관계없이 고유한 구별이 가능하다.
+* 동적으로 프로퍼티 할당이 가능하다.
+
+```javascript
+    plus = function(a, b, callback) {
+        let result = a + b;
+        callback(result)
+    }
+
+    plus(5, 10, function (res) { console.log(res) }) // 15
+```
+
+위의 예제에서 plus 라는 함수를 선언하고 인자로 a, b, callback 을 받는다.<br/>
+마지막 인자인 callback은 함수이름일뿐 아무거나 지정해도 상관없다.<br/>
+위의 예제의 실행순서는 우선 5 와 10을 받아 result 에서 처리하고 callback 함수로 전달받아 다시 밑의 function 에 res 인자로 callback 의 result 값이 넘어와 콘솔에 출력되게 된다.<br/>
+
+만약 저기서 콜백이 없다면 콜백함수의 과정이 끝나기전에 다음 프로세스를 실행해버려서 오류나 undefined 가 뜰 확률이 높다.
+
+콜백함수는 함수로써 다른 함수에 전달되며 이는 외부함수 내에서 루틴 또는 동작을 완성하기 위해 호출된다.
+
+> ## 자바스크립트 this에 대해서 설명하세요
+
