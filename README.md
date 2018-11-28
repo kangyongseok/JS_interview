@@ -213,6 +213,61 @@ document.querySelector('#list-6').addEventListener('click', eventPrint)
 위의예제에서 true 문으로 나왔던것들이 다 false 형태로 결과가 나오는것을 확인 할 수 있다.
 
 > ## apply()와 call()의 차이는 무엇인가요?
+* 함수의 메소드라는 점에서 공통점을 가진다.
+    ```javascript
+    var example = function (a, b, c) {
+        return a + b + c;
+    };
+    example(1, 2, 3); // 6
+    example.call(null, 1, 2, 3); // 6
+    example.apply(null, [1, 2, 3]); // 6
+    ```
+* call() 과 apply() 를 이해하려면 JavaScript에서 능동적인 this 에 대한 이해가 바탕이 되어야 한다.
+    ```javascript
+    // 첫번째 예제
+    function example () {
+        console.log(this)
+    }
+    example () // this = window
+
+    // 두번째 예제
+    let customer1 = {name: 'Code', email: 'code@gmail.com'};
+    let customer2 = {name: 'Reading', email: 'reading@gmail.com'};
+
+    function greeting (text) {
+        console.log(`${text} ${this.name}`);
+        console.log(this) 
+    }
+
+    greeting.call(customer1, 'Hello'); 
+    // Hello Code
+    // {name: 'Code', email: 'code@gmail.com'}
+    greeting.call(customer2, 'Hello'); 
+    // Hello Reading
+    // {name: 'Reading', email: 'reading@gmail.com'}
+    ```
+    일반적으로 함수내에서 this 를 찾을경우 window 객체를 참조하게 된다.
+
+    하지만 call() 메소드를 이용하면 두번째 예제처럼 원하는 객체를 this 로 지정하는것이 가능하다.
+
+    aplly() 또한 동일한 기능을하지만 인자입력방식이 call() 은 쉼표 이지만 apply() 는 배열로 입력받게된다.
+    ```javascript
+    let customer1 = {name: 'Code', email: 'code@gmail.com'};
+    let customer2 = {name: 'Reading', email: 'reading@gmail.com'};
+
+    function greeting (text) {
+        console.log(`${text} ${this.name}`);
+        console.log(this) 
+    }
+
+    greeting.apply(customer1, ['Hello']); 
+    // Hello Code
+    // {name: 'Code', email: 'code@gmail.com'}
+    greeting.apply(customer2, ['Hello']); 
+    // Hello Reading
+    // {name: 'Reading', email: 'reading@gmail.com'}
+    ```
+    결과는 동일하다.
 
 > ## 알고 있는 디자인 패턴에 대해서 설명하세요 (ex. MVC, MVP, MVVM, FLEX)
 
