@@ -270,6 +270,11 @@ document.querySelector('#list-6').addEventListener('click', eventPrint)
     결과는 동일하다.
 
 > ## 알고 있는 디자인 패턴에 대해서 설명하세요 (ex. MVC, MVP, MVVM, FLEX)
+**MVC**
+
+MVC 는 Model,  Controller,  View 를 지칭한다. 디자인패턴중 하나이며 사용자가 Controller를 조작하면 Controller는 Model을 통해서 데이터를 가져오고 그 정보를 바탕으로 시각적인 표현을 담당하는 View를 제어해서 사용자에게 전달하게 된다.
+
+
 
 > ## 콜백함수는 무엇인가요?
 콜백함수란 어떤 이벤트가 발생한 후 수행될 함수를 의미한다. JavaScript 에서 함수는 1급 객체 이므로 인자로 함수를 전달 할 수 있다. 
