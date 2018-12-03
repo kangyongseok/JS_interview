@@ -273,6 +273,43 @@ document.querySelector('#list-6').addEventListener('click', eventPrint)
 **MVC**
 
 MVC 는 Model,  Controller,  View 를 지칭한다. 디자인패턴중 하나이며 사용자가 Controller를 조작하면 Controller는 Model을 통해서 데이터를 가져오고 그 정보를 바탕으로 시각적인 표현을 담당하는 View를 제어해서 사용자에게 전달하게 된다.
+* Model : 프로그램에서 사용되는 실제 데이터 및 데이터 조작 로직을 처리하는 부분
+* View : 사용자에게 제공되어 보여지는 UI 부분
+* Controller : 사용자의 입력을 받고 처리하는 부분
+이 패턴에서의 단점은 View 와 Model이 서로 의존적이라는 점
+
+
+**MVP**
+
+Model 과 View 는 동일하지만 Controller 대신에 Presenter 가 있다.
+* Presenter : View에서 요청한 정보를 Model로 부터 가공해서 View로 전달하는 부분
+
+이 패턴에서는 사용자 입력을 View 에서 입력받게 된다.<br/>
+그리고 모든 동작은 항상 Presenter 를 거쳐서 동작하게 된다.
+1. View 에서의 사용자의 입력
+2. 입력을 받은 View 는 Presenter로 작업을 요청
+3. Presenter에서 필요한 작업을 Model에 요청
+4. Model에서는 Presenter에게 필요한 데이터를 응답
+5. Presenter 는 View 로 다시 응답을 보내줌
+6. View 는 Presenter 로 부터 받은 응답을 사용자에게 보여줌
+
+MVC 패턴에서 보이던 단점은 사라졌지만 대신에 View와 Presenter 간의 의존성이 강하게 묶이게 된다.
+
+**MVVM**
+
+Model과  View 는 패턴이 동일하다.
+
+여기서는 Presenter 대신에 ViewModel 이 있다.
+
+* ViewModel : View를 표현하기 위해 만들어진 View를 위한 Model
+
+MVVM은 두가지 디자인 패턴을 사용하기때문에 View 와 ViewModel은 의존성이 완전히 사라지게 된다.
+
+1. View에 입력이 들어오면 Command 패턴으로 ViewModel에 명령
+2. ViewModel은 필요한 데이터를 Model에 요청
+3. Model은 ViewModel에 필요한 데이터를 응답
+4. ViewModel은 응답받은 데이터를 가공해서 저장
+5. View는 ViewModel과의 Data Binding 으로 인해 자동으로 갱신된다.
 
 
 
