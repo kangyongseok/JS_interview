@@ -357,6 +357,50 @@ MVVM은 두가지 디자인 패턴을 사용하기때문에 View 와 ViewModel�
 ---
 
 > ## 자바스크립트 this에 대해서 설명하세요
+this 는 JavaScript 에서 가장 유동적인 값에 해당될것이다. 함수의 호출방법에 따라서 this 는 함수 내부의 어떤 객체를 가르킬수도있고 전혀 다른 객체 또는 window 를 가르킬수도있다. 
+
+```javascript
+    function thisTest() {
+        console.log(this)
+    }
+
+    thisTest() // window
+```
+
+위의 예제에서 this 는 thisTest() 라는 함수 스코프 안에 존재하지만 window 객체를 가르킨다.
+
+```javascript
+    'use strict'
+    function strictThisTest() {
+        console.log(this)
+    }
+
+    strictThisTest() // undefined
+```
+그러나 JavaScript의 엄격모드라고 하는 'use strict' 를 사용한 모드에서는 전역객체인 window 가 아닌 undefined 의 형태가 나온다.
+
+```javascript
+    'use strict'
+    function strictThisTest() {
+        console.log(this)
+    }
+
+    window.strictThisTest() // window
+```
+
+그러나 여기서 또다른 반전은 엄격모드를 적용했을때 특정 객체의 메서드로 함수를 호출한다면 함수스코프내의 this 는 호출한 객체를 참조하게 된다.
+
+만약 함수를 어떤객체의 메서드로 호출하면 this 는 그 객체를 참조하여 사용할 수 있다.
+
+```javascript
+    var testObject = {
+        prop: 33,
+        func: function() {
+            return this.prop;
+        }
+    };
+    console.log(testObject.func()) // 33
+```
 
 
 
