@@ -359,48 +359,136 @@ MVVM은 두가지 디자인 패턴을 사용하기때문에 View 와 ViewModel�
 > ## 자바스크립트 this에 대해서 설명하세요
 this 는 JavaScript 에서 가장 유동적인 값에 해당될것이다. 함수의 호출방법에 따라서 this 는 함수 내부의 어떤 객체를 가르킬수도있고 전혀 다른 객체 또는 window 를 가르킬수도있다. 
 
+**this 의 개념**
 ```javascript
-    function thisTest() {
-        console.log(this)
-    }
+function thisTest() {
+    console.log(this)
+}
 
-    thisTest() // window
+thisTest() // window
 ```
 
 위의 예제에서 this 는 thisTest() 라는 함수 스코프 안에 존재하지만 window 객체를 가르킨다.
 
 ```javascript
-    'use strict'
-    function strictThisTest() {
-        console.log(this)
-    }
+'use strict'
+function strictThisTest() {
+    console.log(this)
+}
 
-    strictThisTest() // undefined
+strictThisTest() // undefined
 ```
 그러나 JavaScript의 엄격모드라고 하는 'use strict' 를 사용한 모드에서는 전역객체인 window 가 아닌 undefined 의 형태가 나온다.
 
 ```javascript
-    'use strict'
-    function strictThisTest() {
-        console.log(this)
-    }
+'use strict'
+function strictThisTest() {
+    console.log(this)
+}
 
-    window.strictThisTest() // window
+window.strictThisTest() // window
 ```
 
 그러나 여기서 또다른 반전은 엄격모드를 적용했을때 특정 객체의 메서드로 함수를 호출한다면 함수스코프내의 this 는 호출한 객체를 참조하게 된다.
 
 만약 함수를 어떤객체의 메서드로 호출하면 this 는 그 객체를 참조하여 사용할 수 있다.
 
+**method 에서의 this**
 ```javascript
-    var testObject = {
-        prop: 33,
-        func: function() {
-            return this.prop;
-        }
-    };
-    console.log(testObject.func()) // 33
+var testObject = {
+    prop: 33,
+    func: function() {
+        return this.prop;
+    }
+};
+console.log(testObject.func()) // 33
 ```
+
+즉 this 는 함수를 어떻게 호출하냐에 따라 this가 가리키는 대상이 달라지게된다.
+
+**생성자에서의 this**
+```javascript
+// 생성자의 this
+
+// 비어있는 변수 생성
+let funcThis = null;
+
+// 함수생성 위의 변수에 this를 할당
+function Func() {
+    funcThis = this;
+}
+
+// 임의의 변수에 Func() 함수를 할당
+let test1 = Func();
+if(funcThis === window) {
+    console.log('window');
+} // window
+
+// new 를 사용하여 생성자 호출
+let test2 = new Func();
+if(funcThis === test2) {
+    console.log('test2');
+} // test2
+```
+
+new Func() 에서 자바스크립트는 내부적으로 비어있는 객체를 만들고 이 객체내에서 this는 만들어진 객체를 가르키게 된다. 그래서 this 는 새로 생성된 객체를 담고있는 test2 를 가르키게 된다.
+
+
+**this를 제어 가능한 apply, call**
+```javascript
+// 빈 객체 생성
+let o = {}
+let p = {}
+
+// switch 문을 가지는 함수 생성
+function func() {
+    switch(this) {
+        case o:
+            console.log('o');
+            break;
+        case p:
+            console.log('p');
+            break
+        case window:
+            console.log('window');
+            break
+    }
+}
+
+// 기본적으로 함수내에 있는 this 는 전역객체인 window를 가르키게 된다.
+func(); // window
+
+// apply 는 함수에 사용할수 있는 메서드중 하나이고 this가 가르킬 객체를 지정해 줄 수 있다.
+func.apply(o); // o
+func.apply(p); // p
+```
+
+
+**apply() 예제**
+```javascript
+// person 객체에 fullName 이라는 메서드 생성
+let person = {
+    fullName: function(city, country) {
+        console.log(`My fullname ${this.firstName} ${this.lastName} \nCity: ${city} \nCountry: ${country}`) ;
+    }
+}
+
+// person1 객체 생성
+let person1 = {
+    firstName: "Kang",
+    lastName: "Yong",
+}
+
+// person 에서 fullName 메서드를 호출하는데 person1을 참조해서 출력하라
+person.fullName.apply(person1, ["Seoul", "Korea"]); 
+/*
+My fullname Kang Yong 
+City: Seoul 
+Country: Korea
+*/
+```
+
+* apply 와 call 의 차이는 함수에 인수를 전달할때 apply 는 []배열로 받고 call 은 별도로 인수를 받는다.
 
 
 
